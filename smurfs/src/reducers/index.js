@@ -1,23 +1,91 @@
-/*
-  Be sure to import in all of the action types from `../actions`
-*/
+import {
+  FAIL,
+  FETCHING,
+  FETCHED,
+  SAVING,
+  SAVED,
+  UPDATING,
+  UPDATED,
+  DELETING,
+  DELETED    
+}from '../actions';
 
-/*
- Your initial/default state for this project could *Although does not have to* look a lot like this
- {
-   smurfs: [],
-   fetchingSmurfs: false
-   addingSmurf: false
-   updatingSmurf: false
-   deletingSmurf: false
-   error: null
- }
-*/
+const initialState = {
+  fetchingSmurfs: false,
+  addingSmurfs: false,
+  updatingSmurf: false,
+  exilingSmurf: false,
+  smurfs: [],
+  error: null
+}
 
-/*
-  You'll only need one smurf reducer for this project.
-  Feel free to export it as a default and import as rootReducer. 
-  This will guard your namespacing issues.
-  There is no need for 'combineReducers' in this project.
-  Components can then read your store as, `state` and not `state.fooReducer`.
-*/
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+      case FETCHING:
+          return {
+              ...state,
+              fetchingSmurfs: true,
+              error: ''
+          }
+      case FETCHED: {
+          return {
+              ...state,
+              smurfs: action.payload,
+              fetchingSmurfs: false,
+              error: ''
+          }
+      }
+      case SAVING:
+          return {
+              ...state,
+              addingSmurfs: true,
+              error: ''
+          }
+      case SAVED:
+          return {
+              ...state,
+              smurfs: action.payload,
+              addingSmurfs: false,
+              error: ''
+          }
+      case DELETING:
+          return {
+              ...state,
+              exilingSmurf: true,
+              error: ''
+          }
+      case DELETED:
+          return {
+              ...state,
+              smurfs: action.payload,
+              exilingSmurf: false,
+              error: ''
+          }
+      case UPDATING:
+          return {
+              ...state,
+              updatingSmurf: true,
+              error: ''
+          }
+      case UPDATED:
+          return {
+              ...state,
+              smurfs: action.payload,
+              updatingSmurf: false,
+              error: ''
+          }
+      case FAIL:
+          return {
+              ...state,
+              fetchingSmurfs: false,
+              addingSmurfs: false,
+              updatingSmurf: false,
+              exilingSmurf: false,
+              error: action.payload
+          }
+      default:
+      return state;
+  }
+}
+
+export default reducer;
